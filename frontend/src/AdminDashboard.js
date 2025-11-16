@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import * as XLSX from 'xlsx';
 import './App.css';
-
 function AdminDashboard() {
   const [logs, setLogs] = useState([]);
   const [filters, setFilters] = useState({ name: 'All', status: 'All', date: '' });
@@ -12,12 +11,12 @@ function AdminDashboard() {
   }, []);
 
   const fetchLogs = async () => {
-    const res = await axios.get('http://localhost:5000/api/reports');
+    const res = await axios.get('https://timetrackerapp-7m9f.onrender.com/api/reports');
     setLogs(res.data);
   };
 
   const updateStatus = async (id, status) => {
-    await axios.put(`http://localhost:5000/api/reports/${id}`, { status });
+    await axios.put(`https://timetrackerapp-7m9f.onrender.com/api/reports/${id}`, { status });
     fetchLogs();
   };
 

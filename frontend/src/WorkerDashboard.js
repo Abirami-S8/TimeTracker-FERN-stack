@@ -27,7 +27,7 @@ function App() {
   }, []);
 
   const fetchLogs = async (todayDate) => {
-    const res = await axios.get('http://localhost:5000/api/reports');
+    const res = await axios.get('https://timetrackerapp-7m9f.onrender.com/api/reports');
     setLogs(res.data);
 
     const submitted = res.data.some(
@@ -41,14 +41,14 @@ function App() {
 const handleSubmit = async () => {
   try {
     if (editingId) {
-      await axios.put(`http://localhost:5000/api/reports/${editingId}`, {
+      await axios.put(`https://timetrackerapp-7m9f.onrender.com/api/reports/${editingId}`, {
         ...form,
         status: 'Pending',
       });
       setEditingId(null);
     } else {
       if (hasSubmittedToday) return;
-      await axios.post('http://localhost:5000/api/reports', { ...form, status: 'Pending' });
+      await axios.post('https://timetrackerapp-7m9f.onrender.com/api/reports', { ...form, status: 'Pending' });
       setHasSubmittedToday(true);
     }
 
@@ -78,7 +78,7 @@ const handleSubmit = async () => {
         status: 'Pending',
       };
 
-      await axios.post('http://localhost:5000/api/reports', leaveEntry);
+      await axios.post('https://timetrackerapp-7m9f.onrender.com/api/reports', leaveEntry);
       fetchLogs(form.date);
       setHasSubmittedToday(true);
     } catch (err) {
@@ -111,7 +111,7 @@ const handleSubmit = async () => {
   const handleDelete = async (id) => {
   if (window.confirm('Are you sure you want to delete this rejected leave entry?')) {
     try {
-      await axios.delete(`http://localhost:5000/api/reports/${id}`);
+      await axios.delete(`https://timetrackerapp-7m9f.onrender.com/api/reports/${id}`);
       fetchLogs(form.date);
     } catch (err) {
       alert(err.response?.data?.error || 'Error deleting log');
