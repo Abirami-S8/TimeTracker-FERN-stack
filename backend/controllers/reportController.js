@@ -1,6 +1,6 @@
-const db = require('../firebase');
-
+const db = require('../firebase').default;
 const collection = db.collection('reports');
+
 
 // Create a report if one doesn’t exist for the same date
 exports.createReport = async (req, res) => {

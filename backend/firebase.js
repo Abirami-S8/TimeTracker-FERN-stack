@@ -1,3 +1,4 @@
+// firebase.js
 import admin from "firebase-admin";
 
 const serviceAccount = {
@@ -9,8 +10,13 @@ const serviceAccount = {
   client_id: process.env.FIREBASE_CLIENT_ID,
 };
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-});
+// Prevent reinitialization (important for serverless / Render)
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+  });
+}
 
-export default admin;
+const db = admin.firestore();
+
+export default db;
