@@ -1,5 +1,5 @@
 const admin = require("firebase-admin");
-const serviceAccount = require("./timetracker-29cab-firebase-adminsdk-fbsvc-f9fd1c9c76.json"); // put this file in /backend
+const serviceAccount = require("./maestro-tracker-3cad5-firebase-adminsdk-fbsvc-1c99a0cb32.json"); // put this file in /backend
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),

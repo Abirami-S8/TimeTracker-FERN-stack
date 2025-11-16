@@ -57,3 +57,13 @@ exports.updateReport = async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 };
+// Delete report
+exports.deleteReport = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await collection.doc(id).delete();
+    res.json({ message: 'Report deleted successfully' });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};

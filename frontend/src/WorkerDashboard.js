@@ -107,6 +107,19 @@ const handleSubmit = async () => {
     offline: logs.filter(l => l.workMode === 'Offline').length,
     wfh: logs.filter(l => l.workMode === 'Work From Home').length,
   };
+  const today = new Date().toISOString().split('T')[0];
+  const handleDelete = async (id) => {
+  if (window.confirm('Are you sure you want to delete this rejected leave entry?')) {
+    try {
+      await axios.delete(`http://localhost:5000/api/reports/${id}`);
+      fetchLogs(form.date);
+    } catch (err) {
+      alert(err.response?.data?.error || 'Error deleting log');
+    }
+  }
+};
+
+
 
   return (
     <>
@@ -167,10 +180,14 @@ const handleSubmit = async () => {
                         <td>{log.workMode}</td>
                         <td className={`status ${log.status?.toLowerCase() || ''}`}>{log.status || '-'}</td>
                         <td>
-                          {(log.status === 'Pending' || log.status === 'Rejected') && (
-                            <button onClick={() => handleEdit(log)}>Edit</button>
-                          )}
-                        </td>
+  {log.status === 'Pending' && (
+    <button onClick={() => handleEdit(log)}>Edit</button>
+  )}
+  {log.status === 'Rejected' && log.workDone === 'Leave' && log.date === today && (
+    <button onClick={() => handleDelete(log.id)} style={{ color: 'red' }}>Delete</button>
+  )}
+</td>
+
                       </tr>
                     ))
                   )}
